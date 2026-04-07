@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sofía · Medicina Regenerativa y Funcional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --black:#000;--deep:#03050D;--bg2:#080C1C;--bg3:#0D1225;
+  --gold:#C9A84C;--gold2:#E8C96A;--gold-dim:rgba(201,168,76,0.10);
+  --gold-glow:rgba(201,168,76,0.20);--beige:#E8DCC8;--beige2:#F5EFE3;
+  --muted:rgba(232,220,200,0.45);--muted2:rgba(232,220,200,0.22);
+  --border:rgba(232,220,200,0.07);--border-g:rgba(201,168,76,0.22);
+  --teal:rgba(64,224,208,0.7);--teal-dim:rgba(64,224,208,0.08);
+  --font-h:'Playfair Display',Georgia,serif;--font-b:'DM Sans',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--black);color:var(--beige);font-family:var(--font-b);font-size:16px;-webkit-font-smoothing:antialiased;overflow-x:hidden;cursor:none;}
+a{color:inherit;text-decoration:none;}
+#cursor{position:fixed;z-index:9999;pointer-events:none;width:10px;height:10px;background:var(--gold);border-radius:50%;transform:translate(-50%,-50%);mix-blend-mode:difference;}
+#cursor-ring{position:fixed;z-index:9998;pointer-events:none;width:38px;height:38px;border:1px solid rgba(201,168,76,0.5);border-radius:50%;transform:translate(-50%,-50%);transition:width .3s,height .3s;}
+#grain{position:fixed;inset:-50%;z-index:9990;pointer-events:none;width:200%;height:200%;opacity:0.028;animation:grain .5s steps(2) infinite;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:256px 256px;}
+@keyframes grain{0%{transform:translate(0,0)}25%{transform:translate(-3%,2%)}50%{transform:translate(2%,-3%)}75%{transform:translate(-2%,1%)}100%{transform:translate(1%,-1%)}}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:20px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,0.7);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:var(--font-h);font-size:17px;font-weight:400;color:var(--beige2);}
+.nav-logo span{color:var(--gold);font-style:italic;}
+.nav-back{font-size:11px;font-weight:300;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px;transition:color .2s;cursor:none;}
+.nav-back:hover{color:var(--gold);}
+.nav-cta{font-size:11px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;padding:10px 24px;border-radius:100px;border:1px solid var(--gold);color:var(--gold);transition:all .25s;cursor:none;}
+.nav-cta:hover{background:var(--gold);color:var(--black);}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:90px;}
+#hero-canvas{position:absolute;inset:0;width:100%;height:100%;}
+.hero-vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 65% 80% at 30% 50%,transparent 0%,rgba(0,0,0,0.65) 100%);}
+.hero-content{position:relative;z-index:10;padding:60px 80px;max-width:660px;}
+.hero-esp{display:inline-flex;align-items:center;gap:10px;font-size:10px;font-weight:400;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:32px;}
+.hero-esp::before{content:'';display:block;width:32px;height:1px;background:var(--gold);}
+.hero-h1{font-family:var(--font-h);font-size:clamp(40px,6vw,86px);font-weight:900;line-height:0.96;letter-spacing:-0.03em;text-transform:uppercase;color:var(--beige2);margin-bottom:16px;}
+.hero-h1 em{font-style:italic;font-weight:400;color:var(--gold2);display:block;}
+.hero-golpe{font-size:clamp(15px,1.8vw,21px);font-weight:200;color:var(--muted);line-height:1.7;margin:24px 0 44px;max-width:480px;padding-left:20px;border-left:2px solid var(--gold);}
+.hero-golpe strong{color:var(--beige2);font-weight:400;}
+.btn-hero{display:inline-flex;align-items:center;gap:12px;font-size:11px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;padding:16px 40px;border-radius:100px;background:var(--gold);color:var(--black);cursor:none;transition:all .3s;}
+.btn-hero:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 16px 48px rgba(201,168,76,0.3);}
+.scroll-hint{position:absolute;bottom:36px;left:80px;z-index:10;display:flex;flex-direction:column;gap:10px;}
+.scroll-hint span{font-size:9px;letter-spacing:0.22em;color:var(--muted2);text-transform:uppercase;}
+.scroll-bar{width:1px;height:56px;background:var(--border-g);position:relative;overflow:hidden;}
+.scroll-bar::after{content:'';position:absolute;top:0;left:0;width:1px;height:28px;background:var(--gold);animation:scrollAnim 2s ease-in-out infinite;}
+@keyframes scrollAnim{0%{top:-28px;opacity:0}30%{opacity:1}70%{opacity:1}100%{top:56px;opacity:0}}
+
+/* UTILS */
+.s-eyebrow{font-size:10px;font-weight:300;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:14px;margin-bottom:20px;}
+.s-eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--gold);}
+.s-h2{font-family:var(--font-h);font-size:clamp(34px,4.5vw,64px);font-weight:700;line-height:1.04;letter-spacing:-0.02em;color:var(--beige2);}
+.s-h2 em{font-style:italic;color:var(--gold2);font-weight:400;}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease;}
+.reveal.show{opacity:1;transform:translateY(0);}
+
+/* DOLOR */
+#dolor{padding:100px 80px;background:var(--deep);}
+.dolor-inner{max-width:1160px;margin:0 auto;}
+.dolor-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-top:48px;}
+.dolor-text p{font-size:16px;font-weight:200;color:var(--muted);line-height:1.8;margin-top:20px;}
+.confianza-steps{display:flex;flex-direction:column;gap:2px;}
+.c-step{display:flex;align-items:flex-start;gap:16px;padding:22px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;transition:border-color .3s;}
+.c-step:hover{border-color:var(--border-g);}
+.c-step-icon{font-size:22px;flex-shrink:0;margin-top:2px;}
+.c-step h4{font-size:14px;font-weight:400;color:var(--beige2);margin-bottom:6px;}
+.c-step p{font-size:12px;font-weight:200;color:var(--muted);line-height:1.6;}
+
+/* SIMULACIÓN — Opción C */
+#simulacion{padding:100px 0;background:var(--black);}
+.sim-wrap{max-width:1160px;margin:0 auto;padding:0 80px;}
+.sim-header{text-align:center;margin-bottom:56px;}
+.sim-header h2{font-family:var(--font-h);font-size:clamp(32px,4vw,56px);font-weight:700;line-height:1.06;letter-spacing:-0.02em;color:var(--beige2);}
+.sim-header h2 em{font-style:italic;color:var(--gold2);font-weight:400;}
+.sim-header p{font-size:15px;font-weight:200;color:var(--muted);margin-top:14px;}
+
+/* tabs selector */
+.sim-tabs{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:40px;}
+.sim-tab{font-size:11px;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;padding:10px 24px;border-radius:100px;border:1px solid var(--border-g);color:var(--muted);cursor:none;transition:all .25s;}
+.sim-tab.active{background:var(--gold);color:var(--black);border-color:var(--gold);}
+.sim-tab:hover:not(.active){color:var(--gold);}
+
+.sim-panel{display:none;}
+.sim-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);border-radius:20px;overflow:hidden;animation:fadeUp .45s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.sp-left{background:var(--bg2);padding:36px 32px;}
+.sp-right{background:var(--bg3);padding:36px 32px;}
+.sp-label{display:flex;align-items:center;gap:10px;font-size:9px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted2);margin-bottom:24px;}
+.sp-dot{width:8px;height:8px;border-radius:50%;}
+.dot-pac{background:#40E0D0;}
+.dot-sof{background:var(--gold);}
+
+/* WhatsApp */
+.wa-phone{background:#ECE5DD;border-radius:14px;overflow:hidden;max-width:300px;margin:0 auto;box-shadow:0 16px 48px rgba(0,0,0,0.5);}
+.wa-h{background:#075E54;padding:11px 14px;display:flex;align-items:center;gap:10px;}
+.wa-av{width:34px;height:34px;border-radius:50%;background:#128C7E;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#fff;flex-shrink:0;}
+.wa-nm{font-size:13px;font-weight:600;color:#fff;}
+.wa-st{font-size:10px;color:rgba(255,255,255,0.7);}
+.wa-body{padding:10px;display:flex;flex-direction:column;gap:7px;min-height:240px;}
+.wa-out{background:#DCF8C6;align-self:flex-end;border-radius:8px 8px 0 8px;padding:7px 11px;font-size:12px;line-height:1.5;max-width:78%;}
+.wa-in{background:#fff;align-self:flex-start;border-radius:8px 8px 8px 0;padding:7px 11px;font-size:12px;line-height:1.5;max-width:82%;}
+.wa-time{font-size:9px;color:rgba(0,0,0,0.35);text-align:right;margin-top:2px;}
+
+/* explicación Sofía */
+.sof-explain{display:flex;flex-direction:column;gap:14px;}
+.sof-item{padding:18px 20px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;}
+.sof-item-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.sof-icon{font-size:18px;}
+.sof-item h4{font-size:13px;font-weight:400;color:var(--gold2);}
+.sof-item p{font-size:12px;font-weight:200;color:var(--muted);line-height:1.6;}
+.sof-progress{margin-top:20px;}
+.sof-prog-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted2);margin-bottom:8px;}
+.sof-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.sof-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:2px;transition:width .8s ease;}
+
+/* CTA */
+#cta{padding:120px 48px;text-align:center;background:var(--deep);position:relative;}
+#cta::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:200px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.cta-inner{max-width:620px;margin:0 auto;}
+.cta-ey{font-size:10px;font-weight:300;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:24px;}
+.cta-ey::before,.cta-ey::after{content:'';display:block;width:24px;height:1px;background:var(--gold);}
+.cta-h2{font-family:var(--font-h);font-size:clamp(36px,5vw,64px);font-weight:700;line-height:1.04;letter-spacing:-0.02em;color:var(--beige2);margin-bottom:20px;}
+.cta-h2 em{font-style:italic;color:var(--gold2);font-weight:400;}
+.cta-p{font-size:16px;font-weight:200;color:var(--muted);line-height:1.75;margin-bottom:48px;}
+.btn-gold{display:inline-flex;align-items:center;gap:14px;font-family:var(--font-h);font-size:18px;font-weight:700;font-style:italic;letter-spacing:-0.01em;padding:20px 60px;border-radius:100px;background:var(--gold);color:var(--black);cursor:none;transition:all .35s;}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-3px);box-shadow:0 20px 60px rgba(201,168,76,0.35);}
+.cta-guarantee{margin-top:24px;font-size:12px;font-weight:200;color:var(--muted2);display:flex;align-items:center;justify-content:center;gap:8px;}
+.cta-guarantee::before,.cta-guarantee::after{content:'✦';color:var(--gold);font-size:10px;}
+
+footer{border-top:1px solid var(--border);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;background:var(--black);}
+.foot-logo{font-family:var(--font-h);font-size:16px;color:var(--beige);}
+.foot-logo span{color:var(--gold);font-style:italic;}
+.foot-copy{font-size:11px;color:var(--muted2);}
+
+@media(max-width:768px){
+  nav{padding:16px 20px;}
+  .hero-content{padding:40px 24px;}
+  #dolor{padding:80px 24px;}
+  .dolor-grid{grid-template-columns:1fr;gap:40px;}
+  #simulacion{padding:80px 0;}
+  .sim-wrap{padding:0 20px;}
+  .sim-panel.active{grid-template-columns:1fr;}
+  .sim-tabs{flex-wrap:wrap;}
+  #cta{padding:80px 24px;}
+  footer{flex-direction:column;gap:16px;text-align:center;padding:32px 24px;}
+}
+</style>
+</head>
+<body>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<div id="grain"></div>
+
+<nav>
+  <a class="nav-back" href="index.html">← Inicio</a>
+  <div class="nav-logo">sofía<span>.</span>regenera</div>
+  <a href="precios.html" style="font-size:11px;font-weight:300;letter-spacing:0.12em;text-transform:uppercase;color:rgba(232,220,200,0.45);margin-right:20px;text-decoration:none;transition:color .2s;cursor:none;" onmouseover="this.style.color='#C9A84C'" onmouseout="this.style.color='rgba(232,220,200,0.45)'">Precios</a><a class="nav-cta" href="#cta">Diagnóstico Ejecutivo</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-vig"></div>
+  <div class="hero-content">
+    <div class="hero-esp">Medicina Regenerativa y Funcional</div>
+    <h1 class="hero-h1">
+      La confianza<br/>
+      <em>convierte.</em>
+    </h1>
+    <p class="hero-golpe">
+      Tu paciente no duda del procedimiento.<br/>
+      <strong>Duda porque nadie se lo explicó bien.</strong><br/>
+      Sofía construye esa confianza — antes de que llegue al consultorio.
+    </p>
+    <a class="btn-hero" href="#simulacion">Ver la simulación →</a>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-bar"></div>
+  </div>
+</section>
+
+<!-- DOLOR -->
+<section id="dolor">
+  <div class="dolor-inner">
+    <div class="s-eyebrow reveal">El dolor real</div>
+    <h2 class="s-h2 reveal">El paciente quiere.<br/>Pero necesita<br/><em>entender primero.</em></h2>
+    <div class="dolor-grid">
+      <div class="dolor-text reveal">
+        <p>En Medicina Regenerativa y Funcional, la decisión no es impulsiva. El paciente investiga, pregunta, compara. Y cuando no entiende el procedimiento — o nadie se lo explica con paciencia — se va.</p>
+        <p style="margin-top:16px;">Sofía educa, acompaña y construye la confianza que convierte la duda en cita agendada.</p>
+      </div>
+      <div class="confianza-steps reveal">
+        <div class="c-step">
+          <div class="c-step-icon">🧠</div>
+          <div><h4>No entiende el procedimiento</h4><p>Nombres técnicos, términos médicos. Sin explicación clara, el paciente no avanza.</p></div>
+        </div>
+        <div class="c-step" style="margin-top:8px;">
+          <div class="c-step-icon">⏳</div>
+          <div><h4>El ciclo de decisión es largo</h4><p>Sin seguimiento activo, el interés se enfría. La competencia que acompaña — gana.</p></div>
+        </div>
+        <div class="c-step" style="margin-top:8px;">
+          <div class="c-step-icon">🤝</div>
+          <div><h4>Necesita sentirse acompañado</h4><p>La medicina funcional es un proceso. El paciente que se siente acompañado — completa.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIMULACIÓN OPCIÓN C -->
+<section id="simulacion">
+  <div class="sim-wrap">
+    <div class="sim-header reveal">
+      <div class="s-eyebrow" style="justify-content:center;">Sofía en acción · Opción C</div>
+      <h2>Sofía explica.<br/>Sofía acompaña.<br/><em>El paciente decide.</em></h2>
+      <p>Elige la perspectiva que quieres explorar — o vívelas las dos.</p>
+    </div>
+
+    <!-- TABS -->
+    <div class="sim-tabs">
+      <button class="sim-tab active" data-tab="conversacion" onclick="switchTab('conversacion')">💬 Sofía explica el procedimiento</button>
+      <button class="sim-tab" data-tab="acompanamiento" onclick="switchTab('acompanamiento')">🌿 Sofía acompaña el proceso</button>
+    </div>
+
+    <!-- PANEL A: Sofía explica el procedimiento -->
+    <div class="sim-panel active" id="tab-conversacion">
+      <div class="sp-left">
+        <div class="sp-label"><div class="sp-dot dot-pac"></div>El paciente pregunta</div>
+        <div class="wa-phone">
+          <div class="wa-h"><div class="wa-av">S</div><div><div class="wa-nm">Sofía · Centro Regenera</div><div class="wa-st">IA · Especialista</div></div></div>
+          <div class="wa-body">
+            <div class="wa-out">Hola, vi que ofrecen terapia con ozono. ¿Para qué sirve exactamente? No entiendo muy bien 🤔<div class="wa-time">11:02</div></div>
+            <div class="wa-in">¡Hola! Con gusto te explico 🌿 La ozonoterapia es un tratamiento que usa ozono medicinal para estimular la regeneración de tejidos y mejorar la oxigenación celular. Es completamente seguro y tiene respaldo científico. ¿Tienes alguna condición específica que quieras mejorar?<div class="wa-time">11:02</div></div>
+            <div class="wa-out">Tengo fatiga crónica y me dijeron que esto podría ayudar<div class="wa-time">11:03</div></div>
+            <div class="wa-in">Exactamente para eso funciona muy bien 💛 La ozonoterapia mejora la energía celular y reduce la inflamación. El protocolo habitual es entre 8 y 12 sesiones. ¿Te gustaría que un especialista revise tu caso específicamente?<div class="wa-time">11:03</div></div>
+            <div class="wa-out">Sí, me interesa mucho. ¿Cómo sería la primera consulta?<div class="wa-time">11:04</div></div>
+            <div class="wa-in">La primera consulta es una valoración funcional completa — 60 minutos con nuestro especialista. Sin compromiso, sin costo. Saldrás con un plan personalizado. ¿Cuándo te quedaría bien?<div class="wa-time">11:04</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="sp-right">
+        <div class="sp-label"><div class="sp-dot dot-sof"></div>Sofía · El proceso de confianza</div>
+        <div class="sof-explain">
+          <div class="sof-item">
+            <div class="sof-item-head"><span class="sof-icon">🧠</span><h4>Paso 1 — Educación</h4></div>
+            <p>Sofía explica el procedimiento con lenguaje claro, sin tecnicismos. El paciente entiende antes de decidir.</p>
+            <div class="sof-progress"><div class="sof-prog-label">Confianza generada</div><div class="sof-bar"><div class="sof-fill" style="width:85%"></div></div></div>
+          </div>
+          <div class="sof-item">
+            <div class="sof-item-head"><span class="sof-icon">🎯</span><h4>Paso 2 — Personalización</h4></div>
+            <p>Sofía conecta el procedimiento con el caso específico del paciente. No es genérico — es tuyo.</p>
+            <div class="sof-progress"><div class="sof-prog-label">Relevancia percibida</div><div class="sof-bar"><div class="sof-fill" style="width:92%"></div></div></div>
+          </div>
+          <div class="sof-item">
+            <div class="sof-item-head"><span class="sof-icon">📅</span><h4>Paso 3 — Conversión</h4></div>
+            <p>Con confianza construida, la primera consulta gratuita elimina la barrera final. El paciente agenda.</p>
+            <div class="sof-progress"><div class="sof-prog-label">Probabilidad de agendar</div><div class="sof-bar"><div class="sof-fill" style="width:78%"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL B: Sofía acompaña el proceso -->
+    <div class="sim-panel" id="tab-acompanamiento">
+      <div class="sp-left">
+        <div class="sp-label"><div class="sp-dot dot-pac"></div>El paciente en el proceso</div>
+        <div class="wa-phone">
+          <div class="wa-h"><div class="wa-av">S</div><div><div class="wa-nm">Sofía · Centro Regenera</div><div class="wa-st">Seguimiento activo</div></div></div>
+          <div class="wa-body">
+            <div class="wa-in">¡Hola! Esta es tu segunda semana de ozonoterapia 🌿 ¿Cómo te has sentido? Es normal notar cambios progresivos en la energía.<div class="wa-time">Semana 2 · 9:00 AM</div></div>
+            <div class="wa-out">Hola! Sí, he notado algo más de energía. Aunque el lunes me sentí un poco cansada otra vez 😕<div class="wa-time">9:18</div></div>
+            <div class="wa-in">¡Eso es completamente normal! 💛 En el proceso de regeneración hay días de ajuste. Tu cuerpo está trabajando. La sesión de esta semana va a ayudar mucho. ¿Confirmo tu cita del jueves a las 10am?<div class="wa-time">9:18</div></div>
+            <div class="wa-out">Sí, confirmo ✅ Gracias por explicarme, me tranquiliza mucho<div class="wa-time">9:20</div></div>
+            <div class="wa-in">Para eso estamos 🤗 Recuerda hidratarte bien antes de la sesión. ¡Te esperamos el jueves!<div class="wa-time">9:20</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="sp-right">
+        <div class="sp-label"><div class="sp-dot dot-sof"></div>El acompañamiento que retiene</div>
+        <div class="sof-explain">
+          <div class="sof-item">
+            <div class="sof-item-head"><span class="sof-icon">📊</span><h4>Seguimiento semana a semana</h4></div>
+            <p>Sofía monitorea el progreso del paciente y responde sus dudas en cada etapa del tratamiento.</p>
+            <div class="sof-progress"><div class="sof-prog-label">Adherencia al tratamiento</div><div class="sof-bar"><div class="sof-fill" style="width:91%"></div></div></div>
+          </div>
+          <div class="sof-item">
+            <div class="sof-item-head"><span class="sof-icon">🌿</span><h4>Educación continua</h4></div>
+            <p>Explica síntomas normales, refuerza la motivación y celebra los avances. El paciente nunca se siente solo.</p>
+            <div class="sof-progress"><div class="sof-prog-label">Satisfacción del paciente</div><div class="sof-bar"><div class="sof-fill" style="width:94%"></div></div></div>
+          </div>
+          <div class="sof-item">
+            <div class="sof-item-head"><span class="sof-icon">✅</span><h4>Completitud del protocolo</h4></div>
+            <p>Con acompañamiento activo, los pacientes completan el protocolo completo y logran resultados reales.</p>
+            <div class="sof-progress"><div class="sof-prog-label">Protocolos completados</div><div class="sof-bar"><div class="sof-fill" style="width:87%"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-inner">
+    <div class="cta-ey">Diagnóstico Ejecutivo</div>
+    <h2 class="cta-h2">Tu paciente quiere<br/>confiar en ti.<br/><em>Sofía lo hace posible.</em></h2>
+    <p class="cta-p">Desde la primera pregunta hasta el protocolo completo.<br/>Sofía acompaña cada paso del camino.</p>
+    <a class="btn-gold" href="https://calendly.com/claudia-sofiasystemflow/30min" target="_blank">Quiero a Sofía en mi clínica ✦</a>
+    <div class="cta-guarantee">30 días de garantía total · Sin preguntas · Sin condiciones</div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-logo">sofía<span>.</span>flow</div>
+  <div class="foot-copy">© 2025 Sofía System FLOW</div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+window.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function t(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(t);})();
+
+/* TABS */
+function switchTab(tab){
+  document.querySelectorAll('.sim-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.sim-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+  document.getElementById(`tab-${tab}`).classList.add('active');
+}
+
+/* HERO 3D — partículas orgánicas teal/dorado */
+(function(){
+  const canvas=document.getElementById('hero-canvas');
+  const W=canvas.clientWidth,H=canvas.clientHeight;
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.setSize(W,H);
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(55,W/H,.1,1000);
+  camera.position.set(4,0,22);
+  const GOLD=new THREE.Color(0xC9A84C),GOLD2=new THREE.Color(0xE8C96A);
+  const TEAL=new THREE.Color(0x40E0D0),BEIGE=new THREE.Color(0xE8DCC8);
+  /* anillos suaves */
+  [[9,.015,.07,BEIGE,.2],[7,.02,.12,TEAL,.6],[5.5,.025,.2,GOLD,.9],[3.8,.03,.32,GOLD2,1.3],[2.2,.035,.48,TEAL,1.7]].forEach(([r,th,op,col,tx])=>{
+    const g=new THREE.TorusGeometry(r,th,8,100);
+    const m=new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:op});
+    const mesh=new THREE.Mesh(g,m);
+    mesh.rotation.x=Math.PI/2.4+tx*.08;mesh.rotation.z=tx*.12;
+    scene.add(mesh);
+  });
+  const NP=320,pos=new Float32Array(NP*3),col=new Float32Array(NP*3),pv=[];
+  for(let i=0;i<NP;i++){
+    const theta=Math.random()*Math.PI*2,phi=Math.acos(2*Math.random()-1),r=2+Math.random()*10;
+    pos[i*3]=r*Math.sin(phi)*Math.cos(theta);pos[i*3+1]=r*Math.sin(phi)*Math.sin(theta);pos[i*3+2]=r*Math.cos(phi);
+    pv.push({theta,phi,r,dt:(Math.random()-.5)*.004,dp:(Math.random()-.5)*.003,phase:Math.random()*Math.PI*2});
+    const t=Math.random();
+    const c=t<.45?GOLD.clone().lerp(GOLD2,Math.random()):t<.72?TEAL.clone():BEIGE.clone();
+    col[i*3]=c.r;col[i*3+1]=c.g;col[i*3+2]=c.b;
+  }
+  const pg=new THREE.BufferGeometry();
+  pg.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  pg.setAttribute('color',new THREE.BufferAttribute(col,3));
+  scene.add(new THREE.Points(pg,new THREE.PointsMaterial({size:.13,vertexColors:true,transparent:true,opacity:.78,sizeAttenuation:true})));
+  let pmx=0,pmy=0;
+  window.addEventListener('mousemove',e=>{pmx=(e.clientX/window.innerWidth-.5)*2;pmy=(e.clientY/window.innerHeight-.5)*2;});
+  window.addEventListener('resize',()=>{const w=canvas.clientWidth,h=canvas.clientHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();});
+  let t=0;
+  (function animate(){
+    requestAnimationFrame(animate);t+=.006;
+    for(let i=0;i<NP;i++){const v=pv[i];v.theta+=v.dt;v.phi+=v.dp;const p=v.r+Math.sin(t+v.phase)*.35;pos[i*3]=p*Math.sin(v.phi)*Math.cos(v.theta);pos[i*3+1]=p*Math.sin(v.phi)*Math.sin(v.theta);pos[i*3+2]=p*Math.cos(v.phi);}
+    pg.attributes.position.needsUpdate=true;
+    camera.position.x+=(pmx*3-camera.position.x)*.04;camera.position.y+=(-pmy*2-camera.position.y)*.04;camera.lookAt(0,0,0);
+    renderer.render(scene,camera);
+  })();
+})();
+
+const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('show');});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

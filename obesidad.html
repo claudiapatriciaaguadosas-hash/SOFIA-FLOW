@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sofía · Obesidad y Metabolismo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --black:#000;--deep:#03050D;--bg2:#080C1C;--bg3:#0D1225;
+  --gold:#C9A84C;--gold2:#E8C96A;--gold-dim:rgba(201,168,76,0.10);
+  --gold-glow:rgba(201,168,76,0.20);--beige:#E8DCC8;--beige2:#F5EFE3;
+  --muted:rgba(232,220,200,0.45);--muted2:rgba(232,220,200,0.22);
+  --border:rgba(232,220,200,0.07);--border-g:rgba(201,168,76,0.22);
+  --warm:rgba(255,180,100,0.7);--warm-dim:rgba(255,180,100,0.08);
+  --font-h:'Playfair Display',Georgia,serif;--font-b:'DM Sans',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--black);color:var(--beige);font-family:var(--font-b);font-size:16px;-webkit-font-smoothing:antialiased;overflow-x:hidden;cursor:none;}
+a{color:inherit;text-decoration:none;}
+#cursor{position:fixed;z-index:9999;pointer-events:none;width:10px;height:10px;background:var(--gold);border-radius:50%;transform:translate(-50%,-50%);mix-blend-mode:difference;}
+#cursor-ring{position:fixed;z-index:9998;pointer-events:none;width:38px;height:38px;border:1px solid rgba(201,168,76,0.5);border-radius:50%;transform:translate(-50%,-50%);transition:width .3s,height .3s;}
+#grain{position:fixed;inset:-50%;z-index:9990;pointer-events:none;width:200%;height:200%;opacity:0.028;animation:grain .5s steps(2) infinite;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:256px 256px;}
+@keyframes grain{0%{transform:translate(0,0)}25%{transform:translate(-3%,2%)}50%{transform:translate(2%,-3%)}75%{transform:translate(-2%,1%)}100%{transform:translate(1%,-1%)}}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:20px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,0.7);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:var(--font-h);font-size:17px;font-weight:400;color:var(--beige2);}
+.nav-logo span{color:var(--gold);font-style:italic;}
+.nav-back{font-size:11px;font-weight:300;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px;transition:color .2s;cursor:none;}
+.nav-back:hover{color:var(--gold);}
+.nav-cta{font-size:11px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;padding:10px 24px;border-radius:100px;border:1px solid var(--gold);color:var(--gold);transition:all .25s;cursor:none;}
+.nav-cta:hover{background:var(--gold);color:var(--black);}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:90px;}
+#hero-canvas{position:absolute;inset:0;width:100%;height:100%;}
+.hero-vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 65% 80% at 30% 50%,transparent 0%,rgba(0,0,0,0.65) 100%);}
+.hero-content{position:relative;z-index:10;padding:60px 80px;max-width:660px;}
+.hero-esp{display:inline-flex;align-items:center;gap:10px;font-size:10px;font-weight:400;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:32px;}
+.hero-esp::before{content:'';display:block;width:32px;height:1px;background:var(--gold);}
+.hero-h1{font-family:var(--font-h);font-size:clamp(40px,6vw,86px);font-weight:900;line-height:0.96;letter-spacing:-0.03em;text-transform:uppercase;color:var(--beige2);margin-bottom:16px;}
+.hero-h1 em{font-style:italic;font-weight:400;color:var(--gold2);display:block;}
+.hero-golpe{font-size:clamp(15px,1.8vw,21px);font-weight:200;color:var(--muted);line-height:1.7;margin:24px 0 44px;max-width:480px;padding-left:20px;border-left:2px solid var(--gold);}
+.hero-golpe strong{color:var(--beige2);font-weight:400;}
+.btn-hero{display:inline-flex;align-items:center;gap:12px;font-size:11px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;padding:16px 40px;border-radius:100px;background:var(--gold);color:var(--black);cursor:none;transition:all .3s;}
+.btn-hero:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 16px 48px rgba(201,168,76,0.3);}
+.scroll-hint{position:absolute;bottom:36px;left:80px;z-index:10;display:flex;flex-direction:column;gap:10px;}
+.scroll-hint span{font-size:9px;letter-spacing:0.22em;color:var(--muted2);text-transform:uppercase;}
+.scroll-bar{width:1px;height:56px;background:var(--border-g);position:relative;overflow:hidden;}
+.scroll-bar::after{content:'';position:absolute;top:0;left:0;width:1px;height:28px;background:var(--gold);animation:scrollAnim 2s ease-in-out infinite;}
+@keyframes scrollAnim{0%{top:-28px;opacity:0}30%{opacity:1}70%{opacity:1}100%{top:56px;opacity:0}}
+
+/* UTILS */
+.s-eyebrow{font-size:10px;font-weight:300;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:14px;margin-bottom:20px;}
+.s-eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--gold);}
+.s-h2{font-family:var(--font-h);font-size:clamp(34px,4.5vw,64px);font-weight:700;line-height:1.04;letter-spacing:-0.02em;color:var(--beige2);}
+.s-h2 em{font-style:italic;color:var(--gold2);font-weight:400;}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease;}
+.reveal.show{opacity:1;transform:translateY(0);}
+
+/* DOLOR */
+#dolor{padding:100px 80px;background:var(--deep);}
+.dolor-inner{max-width:1160px;margin:0 auto;}
+.verdad-box{margin-top:40px;border:1px solid var(--border-g);border-radius:20px;padding:56px 64px;background:linear-gradient(135deg,rgba(201,168,76,0.05) 0%,transparent 60%);position:relative;overflow:hidden;}
+.verdad-box::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:50%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.verdad-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin-top:40px;background:var(--border);border-radius:14px;overflow:hidden;}
+.v-item{background:var(--bg2);padding:28px 24px;text-align:center;}
+.v-num{font-family:var(--font-h);font-size:48px;font-weight:900;font-style:italic;color:var(--gold2);line-height:1;margin-bottom:8px;}
+.v-label{font-size:12px;font-weight:200;color:var(--muted);line-height:1.5;}
+.verdad-frase{font-family:var(--font-h);font-size:clamp(18px,2.5vw,28px);font-weight:400;font-style:italic;color:var(--beige2);text-align:center;margin-top:32px;line-height:1.4;}
+.verdad-frase strong{color:var(--gold2);font-style:normal;}
+
+/* DEMO SPLIT */
+#demo{padding:100px 0;background:var(--black);}
+.demo-wrap{max-width:1200px;margin:0 auto;padding:0 48px;}
+.demo-header{text-align:center;margin-bottom:56px;}
+.demo-header h2{font-family:var(--font-h);font-size:clamp(32px,4vw,56px);font-weight:700;line-height:1.06;letter-spacing:-0.02em;color:var(--beige2);}
+.demo-header h2 em{font-style:italic;color:var(--gold2);font-weight:400;}
+.demo-header p{font-size:15px;font-weight:200;color:var(--muted);margin-top:14px;}
+
+.prog-bar{display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:40px;flex-wrap:wrap;}
+.prog-step{display:flex;align-items:center;gap:6px;opacity:0.35;cursor:none;transition:opacity .3s;}
+.prog-step.active{opacity:1;}
+.prog-step.done{opacity:0.6;}
+.prog-num{width:26px;height:26px;border-radius:50%;border:1px solid var(--border-g);background:var(--gold-dim);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:11px;font-style:italic;color:var(--gold);transition:all .3s;flex-shrink:0;}
+.prog-step.active .prog-num{background:var(--gold);color:var(--black);}
+.prog-label{font-size:10px;font-weight:300;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase;white-space:nowrap;}
+.prog-line{width:20px;height:1px;background:var(--border);flex-shrink:0;}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);border-radius:20px;overflow:hidden;}
+.panel{background:var(--bg2);padding:36px 32px;}
+.panel-r{background:var(--bg3);}
+.panel-label{display:flex;align-items:center;gap:10px;font-size:9px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted2);margin-bottom:24px;}
+.panel-dot{width:8px;height:8px;border-radius:50%;}
+.dot-p{background:#FFB464;}
+.dot-d{background:var(--gold);}
+.step-c{display:none;}
+.step-c.active{display:block;animation:fadeUp .45s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.wa-phone{background:#ECE5DD;border-radius:14px;overflow:hidden;max-width:300px;margin:0 auto;box-shadow:0 16px 48px rgba(0,0,0,0.5);}
+.wa-h{background:#075E54;padding:11px 14px;display:flex;align-items:center;gap:10px;}
+.wa-av{width:34px;height:34px;border-radius:50%;background:#128C7E;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#fff;flex-shrink:0;}
+.wa-nm{font-size:13px;font-weight:600;color:#fff;}
+.wa-st{font-size:10px;color:rgba(255,255,255,0.7);}
+.wa-body{padding:10px;display:flex;flex-direction:column;gap:7px;min-height:200px;}
+.wa-out{background:#DCF8C6;align-self:flex-end;border-radius:8px 8px 0 8px;padding:7px 11px;font-size:12px;line-height:1.5;max-width:78%;}
+.wa-in{background:#fff;align-self:flex-start;border-radius:8px 8px 8px 0;padding:7px 11px;font-size:12px;line-height:1.5;max-width:82%;}
+.wa-time{font-size:9px;color:rgba(0,0,0,0.35);text-align:right;margin-top:2px;}
+.wa-audio{background:#fff;padding:9px 12px;border-radius:8px 8px 8px 0;align-self:flex-start;display:flex;align-items:center;gap:8px;max-width:80%;}
+.wa-wave{flex:1;height:18px;background:repeating-linear-gradient(90deg,#128C7E 0,#128C7E 2px,transparent 2px,transparent 4px);opacity:0.4;}
+.wa-audio-t{font-size:9px;color:#999;}
+
+/* motivacion tracker */
+.motiv-track{display:flex;flex-direction:column;gap:10px;}
+.motiv-week{padding:16px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;}
+.motiv-week-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.motiv-week-label{font-size:11px;font-weight:400;color:var(--beige2);}
+.motiv-week-status{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;padding:2px 8px;border-radius:100px;}
+.ms-ok{background:rgba(37,211,102,0.12);color:#25D366;border:1px solid rgba(37,211,102,0.25);}
+.ms-act{background:var(--gold-dim);color:var(--gold);border:1px solid var(--border-g);}
+.ms-pend{background:var(--border);color:var(--muted2);}
+.motiv-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+.motiv-fill{height:100%;border-radius:3px;transition:width 1s ease;}
+.mf-100{background:linear-gradient(90deg,#25D366,#34a853);width:100%;}
+.mf-88{background:linear-gradient(90deg,var(--gold),var(--gold2));width:88%;}
+.mf-0{background:var(--border);width:0%;}
+.motiv-note{font-size:10px;font-weight:200;color:var(--muted);margin-top:6px;}
+
+.explain{display:flex;flex-direction:column;gap:12px;}
+.ex-item{display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--bg2);border-radius:10px;border:1px solid var(--border);animation:fadeUp .4s ease both;}
+.ex-item:nth-child(2){animation-delay:.1s;}
+.ex-item:nth-child(3){animation-delay:.2s;}
+.ex-num{font-family:var(--font-h);font-size:16px;font-style:italic;color:var(--gold);min-width:20px;margin-top:2px;}
+.ex-item h4{font-size:13px;font-weight:400;color:var(--beige2);margin-bottom:3px;}
+.ex-item p{font-size:12px;font-weight:200;color:var(--muted);line-height:1.55;}
+
+.demo-ctrl{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:32px;}
+.btn-prev,.btn-next{font-size:11px;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;padding:11px 26px;border-radius:100px;border:1px solid var(--border-g);color:var(--muted);cursor:none;transition:all .25s;}
+.btn-next{background:var(--gold);color:var(--black);border-color:var(--gold);}
+.btn-prev:hover{border-color:var(--gold);color:var(--gold);}
+.btn-next:hover{background:var(--gold2);}
+.btn-prev:disabled{opacity:0.3;pointer-events:none;}
+.step-ct{font-family:var(--font-h);font-size:13px;font-style:italic;color:var(--muted2);}
+
+/* CTA */
+#cta{padding:120px 48px;text-align:center;background:var(--deep);position:relative;}
+#cta::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:200px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.cta-inner{max-width:620px;margin:0 auto;}
+.cta-ey{font-size:10px;font-weight:300;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:24px;}
+.cta-ey::before,.cta-ey::after{content:'';display:block;width:24px;height:1px;background:var(--gold);}
+.cta-h2{font-family:var(--font-h);font-size:clamp(36px,5vw,64px);font-weight:700;line-height:1.04;letter-spacing:-0.02em;color:var(--beige2);margin-bottom:20px;}
+.cta-h2 em{font-style:italic;color:var(--gold2);font-weight:400;}
+.cta-p{font-size:16px;font-weight:200;color:var(--muted);line-height:1.75;margin-bottom:48px;}
+.btn-gold{display:inline-flex;align-items:center;gap:14px;font-family:var(--font-h);font-size:18px;font-weight:700;font-style:italic;letter-spacing:-0.01em;padding:20px 60px;border-radius:100px;background:var(--gold);color:var(--black);cursor:none;transition:all .35s;}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-3px);box-shadow:0 20px 60px rgba(201,168,76,0.35);}
+.cta-guarantee{margin-top:24px;font-size:12px;font-weight:200;color:var(--muted2);display:flex;align-items:center;justify-content:center;gap:8px;}
+.cta-guarantee::before,.cta-guarantee::after{content:'✦';color:var(--gold);font-size:10px;}
+
+footer{border-top:1px solid var(--border);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;background:var(--black);}
+.foot-logo{font-family:var(--font-h);font-size:16px;color:var(--beige);}
+.foot-logo span{color:var(--gold);font-style:italic;}
+.foot-copy{font-size:11px;color:var(--muted2);}
+
+@media(max-width:768px){
+  nav{padding:16px 20px;}
+  .hero-content{padding:40px 24px;}
+  #dolor{padding:80px 24px;}
+  .verdad-box{padding:36px 24px;}
+  .verdad-grid{grid-template-columns:1fr;}
+  #demo{padding:80px 0;}
+  .demo-wrap{padding:0 20px;}
+  .split{grid-template-columns:1fr;}
+  #cta{padding:80px 24px;}
+  footer{flex-direction:column;gap:16px;text-align:center;padding:32px 24px;}
+}
+</style>
+</head>
+<body>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<div id="grain"></div>
+
+<nav>
+  <a class="nav-back" href="index.html">← Inicio</a>
+  <div class="nav-logo">sofía<span>.</span>metabo</div>
+  <a href="precios.html" style="font-size:11px;font-weight:300;letter-spacing:0.12em;text-transform:uppercase;color:rgba(232,220,200,0.45);margin-right:20px;text-decoration:none;transition:color .2s;cursor:none;" onmouseover="this.style.color='#C9A84C'" onmouseout="this.style.color='rgba(232,220,200,0.45)'">Precios</a><a class="nav-cta" href="#cta">Diagnóstico Ejecutivo</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-vig"></div>
+  <div class="hero-content">
+    <div class="hero-esp">Obesidad y Metabolismo</div>
+    <h1 class="hero-h1">
+      No abandonan<br/>por voluntad.<br/>
+      <em>Los soltaste.</em>
+    </h1>
+    <p class="hero-golpe">
+      El paciente llega con motivación.<br/>
+      <strong>Se va porque nadie lo llevó de la mano.</strong><br/>
+      Sofía acompaña cada semana del proceso — sin que tu equipo intervenga.
+    </p>
+    <a class="btn-hero" href="#cta">Agendar mi Diagnóstico Ejecutivo →</a>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-bar"></div>
+  </div>
+</section>
+
+<!-- DOLOR / VERDAD -->
+<section id="dolor">
+  <div class="dolor-inner">
+    <div class="s-eyebrow reveal">La verdad incómoda</div>
+    <h2 class="s-h2 reveal">El paciente no falla.<br/><em>El sistema falla.</em></h2>
+    <div class="verdad-box reveal">
+      <div class="verdad-grid">
+        <div class="v-item">
+          <div class="v-num">68%</div>
+          <div class="v-label">de pacientes abandona el tratamiento antes de completarlo</div>
+        </div>
+        <div class="v-item">
+          <div class="v-num">3</div>
+          <div class="v-label">meses es el momento crítico de abandono sin seguimiento activo</div>
+        </div>
+        <div class="v-item">
+          <div class="v-num">4x</div>
+          <div class="v-label">más adherencia cuando el paciente recibe acompañamiento semanal</div>
+        </div>
+      </div>
+      <p class="verdad-frase">
+        No es falta de voluntad.<br/>
+        Es falta de <strong>alguien que los acompañe</strong> cuando baja la motivación.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO SPLIT -->
+<section id="demo">
+  <div class="demo-wrap">
+    <div class="demo-header reveal">
+      <div class="s-eyebrow" style="justify-content:center;">Sofía · Acompañamiento semana a semana</div>
+      <h2>De la mano.<br/><em>Cada semana.</em></h2>
+      <p>Así acompaña Sofía a tu paciente durante el tratamiento — con motivación, recordatorios y presencia constante.</p>
+    </div>
+
+    <div class="prog-bar" id="prog">
+      <div class="prog-step active" data-s="0"><div class="prog-num">1</div><span class="prog-label">Semana 1</span></div>
+      <div class="prog-line"></div>
+      <div class="prog-step" data-s="1"><div class="prog-num">2</div><span class="prog-label">Semana 4</span></div>
+      <div class="prog-line"></div>
+      <div class="prog-step" data-s="2"><div class="prog-num">3</div><span class="prog-label">Momento crítico</span></div>
+      <div class="prog-line"></div>
+      <div class="prog-step" data-s="3"><div class="prog-num">4</div><span class="prog-label">Semana 12</span></div>
+      <div class="prog-line"></div>
+      <div class="prog-step" data-s="4"><div class="prog-num">5</div><span class="prog-label">Resultado</span></div>
+    </div>
+
+    <div class="split">
+      <div class="panel">
+        <div class="panel-label"><div class="panel-dot dot-p"></div>Lo que vive el paciente</div>
+
+        <div class="step-c active" id="p0">
+          <div class="wa-phone">
+            <div class="wa-h"><div class="wa-av">S</div><div><div class="wa-nm">Sofía · Centro Metabólico</div><div class="wa-st">Semana 1 · Bienvenida</div></div></div>
+            <div class="wa-body">
+              <div class="wa-in">¡Hola! Bienvenida al programa de transformación metabólica 💛 Soy Sofía y voy a acompañarte cada semana de este proceso. Hoy es el día 1 — ¿cómo te sientes?<div class="wa-time">Lun · 8:00 AM</div></div>
+              <div class="wa-out">Emocionada y un poco nerviosa jeje 😅<div class="wa-time">8:14</div></div>
+              <div class="wa-in">¡Es completamente normal! Lo que sientes hoy es energía de inicio 🔥 Esta semana tu única tarea es presentarte a las citas y descansar bien. El resto lo manejamos nosotros. ¿Tienes alguna pregunta antes de empezar?<div class="wa-time">8:14</div></div>
+              <div class="wa-out">No, gracias! Me siento más tranquila ahora 🤍<div class="wa-time">8:16</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-c" id="p1">
+          <div class="wa-phone">
+            <div class="wa-h"><div class="wa-av">S</div><div><div class="wa-nm">Sofía · Centro Metabólico</div><div class="wa-st">Semana 4 · Seguimiento</div></div></div>
+            <div class="wa-body">
+              <div class="wa-audio"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#128C7E" stroke-width="2" stroke-linecap="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg><div class="wa-wave"></div><div class="wa-audio-t">0:24</div></div>
+              <div class="wa-in" style="font-size:11px;font-style:italic;">🎙 "¡Hola! Ya completaste tu semana 4 — eso merece celebrarse 🎉 Has sido muy constante. Esta semana vamos a ajustar tu plan nutricional. ¿Cómo te has sentido con la energía?"<div class="wa-time">Lun · 8:00 AM</div></div>
+              <div class="wa-out">Bien! Noto que tengo más energía en las mañanas 😊<div class="wa-time">8:22</div></div>
+              <div class="wa-in">¡Eso es exactamente lo que debería pasar! Tu metabolismo está respondiendo. Sigue así 💪<div class="wa-time">8:22</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-c" id="p2">
+          <div class="wa-phone">
+            <div class="wa-h"><div class="wa-av">S</div><div><div class="wa-nm">Sofía · Centro Metabólico</div><div class="wa-st">Semana 8 · Momento crítico</div></div></div>
+            <div class="wa-body">
+              <div class="wa-out">Sofía... esta semana no pude seguir el plan, me frustré mucho 😞<div class="wa-time">Mar · 9:14</div></div>
+              <div class="wa-in">Gracias por contarme 💛 Lo que sientes es completamente normal en la semana 8 — es el momento más difícil del proceso y lo estás atravesando. Un tropiezo no borra 8 semanas de trabajo. ¿Puedes contarme qué pasó?<div class="wa-time">9:14</div></div>
+              <div class="wa-out">Tuve muchos compromisos y no pude ir al gimnasio<div class="wa-time">9:16</div></div>
+              <div class="wa-in">Entiendo. Vamos a ajustar el plan esta semana para que sea más fácil con tu agenda. Tu cita del jueves sigue en pie — te vemos ahí 🤗<div class="wa-time">9:16</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-c" id="p3">
+          <div class="wa-phone">
+            <div class="wa-h"><div class="wa-av">S</div><div><div class="wa-nm">Sofía · Centro Metabólico</div><div class="wa-st">Semana 12 · Logro</div></div></div>
+            <div class="wa-body">
+              <div class="wa-in">¡Felicitaciones! 🎉 Completaste las 12 semanas del protocolo. Eso es un logro enorme y merece reconocerse. ¿Cómo te sientes hoy comparado con la semana 1?<div class="wa-time">Lun · 8:00 AM</div></div>
+              <div class="wa-out">Increíble. Tengo mucha más energía, dormí mejor y bajé 8 kilos 🥹<div class="wa-time">8:18</div></div>
+              <div class="wa-in">¡Lo lograste! 🌟 Ahora viene la fase de mantenimiento. Seguiremos en contacto para que los resultados sean permanentes. Estamos muy orgullosos de ti 💛<div class="wa-time">8:18</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-c" id="p4">
+          <div class="wa-phone">
+            <div class="wa-h"><div class="wa-av">S</div><div><div class="wa-nm">Sofía · Centro Metabólico</div><div class="wa-st">Mantenimiento activo</div></div></div>
+            <div class="wa-body">
+              <div class="wa-in">Han pasado 3 meses desde que completaste tu protocolo 🌿 ¿Cómo mantienes los resultados? ¿Tienes alguna duda o ajuste que necesites?<div class="wa-time">3 meses · 9:00 AM</div></div>
+              <div class="wa-out">Todo bien! Aunque siento que podría mejorar el sueño<div class="wa-time">9:12</div></div>
+              <div class="wa-in">Perfecto timing — tenemos un protocolo de optimización del sueño que encaja justo con tu fase actual. ¿Agendar una cita de seguimiento?<div class="wa-time">9:12</div></div>
+              <div class="wa-out">Sí por favor! 🙌<div class="wa-time">9:13</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-r">
+        <div class="panel-label"><div class="panel-dot dot-d"></div>Lo que ves tú · Backend</div>
+
+        <div class="step-c active" id="d0">
+          <div class="explain">
+            <div class="ex-item"><span class="ex-num">✦</span><div><h4>Bienvenida automática personalizada</h4><p>Sofía saluda al paciente el primer día del protocolo. Reduce la ansiedad inicial y establece la relación de confianza desde el inicio.</p></div></div>
+            <div class="ex-item"><span class="ex-num">✦</span><div><h4>Sin trabajo para tu equipo</h4><p>El primer contacto, la bienvenida y las instrucciones iniciales las gestiona Sofía automáticamente.</p></div></div>
+          </div>
+        </div>
+
+        <div class="step-c" id="d1">
+          <div class="motiv-track">
+            <div class="motiv-week">
+              <div class="motiv-week-header"><span class="motiv-week-label">Semana 1 — Inicio</span><span class="motiv-week-status ms-ok">Completada ✓</span></div>
+              <div class="motiv-bar"><div class="motiv-fill mf-100"></div></div>
+              <div class="motiv-note">4 sesiones completadas · Motivación alta</div>
+            </div>
+            <div class="motiv-week">
+              <div class="motiv-week-header"><span class="motiv-week-label">Semana 2</span><span class="motiv-week-status ms-ok">Completada ✓</span></div>
+              <div class="motiv-bar"><div class="motiv-fill mf-100"></div></div>
+              <div class="motiv-note">Responde todos los check-ins de Sofía</div>
+            </div>
+            <div class="motiv-week">
+              <div class="motiv-week-header"><span class="motiv-week-label">Semana 4 — Actual</span><span class="motiv-week-status ms-act">En proceso</span></div>
+              <div class="motiv-bar"><div class="motiv-fill mf-88"></div></div>
+              <div class="motiv-note">Audio de seguimiento enviado · Respondió positivo</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-c" id="d2">
+          <div class="explain">
+            <div class="ex-item"><span class="ex-num">⚠️</span><div><h4>Alerta de riesgo de abandono detectada</h4><p>Sofía identifica señales de frustración y activa un flujo de contención emocional antes de que el paciente tome la decisión de abandonar.</p></div></div>
+            <div class="ex-item"><span class="ex-num">✦</span><div><h4>Ajuste del plan automático</h4><p>Sofía adapta las recomendaciones al contexto del paciente — sin que el médico tenga que intervenir en cada caso.</p></div></div>
+            <div class="ex-item"><span class="ex-num">✦</span><div><h4>Retención en el momento crítico</h4><p>El 68% que normalmente abandona en semana 8 — con Sofía, se queda y completa.</p></div></div>
+          </div>
+        </div>
+
+        <div class="step-c" id="d3">
+          <div class="motiv-track">
+            <div class="motiv-week">
+              <div class="motiv-week-header"><span class="motiv-week-label">Semanas 1-8</span><span class="motiv-week-status ms-ok">Completadas ✓</span></div>
+              <div class="motiv-bar"><div class="motiv-fill mf-100"></div></div>
+              <div class="motiv-note">Superó el momento crítico · Sofía la retuvo en semana 8</div>
+            </div>
+            <div class="motiv-week">
+              <div class="motiv-week-header"><span class="motiv-week-label">Semanas 9-12</span><span class="motiv-week-status ms-ok">Completadas ✓</span></div>
+              <div class="motiv-bar"><div class="motiv-fill mf-100"></div></div>
+              <div class="motiv-note">Protocolo 100% completado · -8kg · Resultado real</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-c" id="d4">
+          <div class="explain">
+            <div class="ex-item"><span class="ex-num">✦</span><div><h4>Fase de mantenimiento activa</h4><p>El tratamiento terminó, pero Sofía continúa. Monitorea el mantenimiento y detecta oportunidades para nuevos protocolos.</p></div></div>
+            <div class="ex-item"><span class="ex-num">✦</span><div><h4>Paciente recurrente</h4><p>Una paciente que completó y mantiene resultados — es la mejor fuente de referidos y la más fácil de retener para nuevos servicios.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-ctrl">
+      <button class="btn-prev" id="bp" disabled>← Anterior</button>
+      <span class="step-ct" id="sc">Semana 1 de 5</span>
+      <button class="btn-next" id="bn">Siguiente →</button>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-inner">
+    <div class="cta-ey">Diagnóstico Ejecutivo</div>
+    <h2 class="cta-h2">Tu paciente quiere<br/>llegar al final.<br/><em>Sofía lo lleva.</em></h2>
+    <p class="cta-p">De la mano. Cada semana. Sin soltar.<br/>Eso es lo que diferencia a las clínicas que retienen.</p>
+    <a class="btn-gold" href="https://calendly.com/claudia-sofiasystemflow/30min" target="_blank">Quiero a Sofía en mi clínica ✦</a>
+    <div class="cta-guarantee">30 días de garantía total · Sin preguntas · Sin condiciones</div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-logo">sofía<span>.</span>flow</div>
+  <div class="foot-copy">© 2025 Sofía System FLOW</div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+window.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function t(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(t);})();
+
+/* HERO 3D — partículas cálidas dorado/naranja */
+(function(){
+  const canvas=document.getElementById('hero-canvas');
+  const W=canvas.clientWidth,H=canvas.clientHeight;
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.setSize(W,H);
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(55,W/H,.1,1000);
+  camera.position.set(4,0,22);
+  const GOLD=new THREE.Color(0xC9A84C),GOLD2=new THREE.Color(0xE8C96A);
+  const WARM=new THREE.Color(0xFFB464),BEIGE=new THREE.Color(0xE8DCC8);
+  [[9,.014,.07,BEIGE,.15],[7,.02,.13,WARM,.5],[5.5,.026,.22,GOLD,.85],[3.8,.032,.36,GOLD2,1.2],[2.3,.036,.52,WARM,1.6]].forEach(([r,th,op,col,tx])=>{
+    const g=new THREE.TorusGeometry(r,th,8,100);
+    const m=new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:op});
+    const mesh=new THREE.Mesh(g,m);
+    mesh.rotation.x=Math.PI/2.3+tx*.09;mesh.rotation.z=tx*.13;
+    scene.add(mesh);
+  });
+  const NP=300,pos=new Float32Array(NP*3),col=new Float32Array(NP*3),pv=[];
+  for(let i=0;i<NP;i++){
+    const theta=Math.random()*Math.PI*2,phi=Math.acos(2*Math.random()-1),r=2+Math.random()*10;
+    pos[i*3]=r*Math.sin(phi)*Math.cos(theta);pos[i*3+1]=r*Math.sin(phi)*Math.sin(theta);pos[i*3+2]=r*Math.cos(phi);
+    pv.push({theta,phi,r,dt:(Math.random()-.5)*.005,dp:(Math.random()-.5)*.003,phase:Math.random()*Math.PI*2});
+    const t=Math.random();
+    const c=t<.5?GOLD.clone().lerp(GOLD2,Math.random()):t<.75?WARM.clone():BEIGE.clone();
+    col[i*3]=c.r;col[i*3+1]=c.g;col[i*3+2]=c.b;
+  }
+  const pg=new THREE.BufferGeometry();
+  pg.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  pg.setAttribute('color',new THREE.BufferAttribute(col,3));
+  scene.add(new THREE.Points(pg,new THREE.PointsMaterial({size:.14,vertexColors:true,transparent:true,opacity:.82,sizeAttenuation:true})));
+  let pmx=0,pmy=0;
+  window.addEventListener('mousemove',e=>{pmx=(e.clientX/window.innerWidth-.5)*2;pmy=(e.clientY/window.innerHeight-.5)*2;});
+  window.addEventListener('resize',()=>{const w=canvas.clientWidth,h=canvas.clientHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();});
+  let t=0;
+  (function animate(){
+    requestAnimationFrame(animate);t+=.007;
+    for(let i=0;i<NP;i++){const v=pv[i];v.theta+=v.dt;v.phi+=v.dp;const p=v.r+Math.sin(t+v.phase)*.3;pos[i*3]=p*Math.sin(v.phi)*Math.cos(v.theta);pos[i*3+1]=p*Math.sin(v.phi)*Math.sin(v.theta);pos[i*3+2]=p*Math.cos(v.phi);}
+    pg.attributes.position.needsUpdate=true;
+    camera.position.x+=(pmx*3-camera.position.x)*.04;camera.position.y+=(-pmy*2-camera.position.y)*.04;camera.lookAt(0,0,0);
+    renderer.render(scene,camera);
+  })();
+})();
+
+/* DEMO */
+let step=0,total=5;
+const labels=['Semana 1','Semana 4','Momento crítico','Semana 12','Resultado'];
+const bp=document.getElementById('bp'),bn=document.getElementById('bn'),sc=document.getElementById('sc');
+function updateDemo(s){
+  document.querySelectorAll('.step-c').forEach(e=>e.classList.remove('active'));
+  ['p','d'].forEach(prefix=>{const el=document.getElementById(prefix+s);if(el)el.classList.add('active');});
+  document.querySelectorAll('.prog-step').forEach((el,i)=>{el.classList.remove('active','done');if(i===s)el.classList.add('active');if(i<s)el.classList.add('done');});
+  sc.textContent=`${labels[s]} · ${s+1} de ${total}`;
+  bp.disabled=s===0;
+  bn.textContent=s===total-1?'Ver resultado completo →':'Siguiente →';
+  step=s;
+  if(s>0)document.getElementById('demo').scrollIntoView({behavior:'smooth',block:'center'});
+}
+bn.addEventListener('click',()=>{if(step<total-1)updateDemo(step+1);else document.getElementById('cta').scrollIntoView({behavior:'smooth'});});
+bp.addEventListener('click',()=>{if(step>0)updateDemo(step-1);});
+document.querySelectorAll('.prog-step').forEach((el,i)=>{el.style.cursor='none';el.addEventListener('click',()=>updateDemo(i));});
+
+const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('show');});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
